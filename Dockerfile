@@ -2,8 +2,10 @@ FROM ollama/ollama:0.40.7@sha256:2e6cc92ffa43b4b1a2e70e315407e00ac97ec125afc7127
 
 FROM ghcr.io/open-webui/open-webui:v0.12.3-slim@sha256:5adfb0355bbe4a5860c0ba9482cc0b40f573de3749a21a64cf4789391a14fffc
 
-COPY --from=ollama /bin/ollama /usr/local/bin/ollama
+COPY --from=ollama /bin/ollama /bin/ollama
 COPY --from=ollama /usr/lib/ollama /usr/lib/ollama
+
+RUN test -x /bin/ollama && test -d /usr/lib/ollama
 
 ENV USE_OLLAMA_DOCKER=true \
     OLLAMA_HOST=127.0.0.1:11434 \
