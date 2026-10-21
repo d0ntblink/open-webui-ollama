@@ -16,4 +16,4 @@ ENV USE_OLLAMA_DOCKER=true \
     OLLAMA_CONTEXT_LENGTH=4096 \
     OLLAMA_NO_CLOUD=1
 
-HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 CMD curl --fail --silent http://127.0.0.1:8080/health > /dev/null && curl --fail --silent http://127.0.0.1:11434/api/version > /dev/null
+HEALTHCHECK --interval=30s --timeout=5s --start-period=120s --retries=3 CMD curl --fail --silent --resolve "${WEBUI_TLS_SERVER_NAME:-localhost}:8080:127.0.0.1" "${WEBUI_HEALTH_URL:-http://127.0.0.1:8080/health}" > /dev/null && curl --fail --silent http://127.0.0.1:11434/api/version > /dev/null
